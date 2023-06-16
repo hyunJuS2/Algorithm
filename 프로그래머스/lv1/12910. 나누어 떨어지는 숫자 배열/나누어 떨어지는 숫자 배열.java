@@ -1,28 +1,23 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        int lenth = 0; // answer배열의 길이를 구하기 위해 -> 나눠 떨어지는 개수가 즉 배열의 길이
-        int index = 0; // answer배열에 나눠 떨어지는 값을 넣기 위한 index 값
-
-        for (int num : arr) {
-            if (num % divisor == 0) {
-               lenth++;
+              int [] answer = {};
+        ArrayList<Integer> al = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i]%divisor == 0) {
+                al.add(arr[i]);
             }
         }
-
-        if (lenth == 0) {
-            int[] answer = {-1};
-            return answer;
+        if (al.isEmpty()) {
+            al.add(-1);
+        }
+        answer = new int[al.size()];
+        for (int i = 0; i < al.size(); i++) {
+            answer[i] = al.get(i);
         }
 
-        int[] answer = new int[lenth];
-        for (int j = 0; j < arr.length ; j++) {
-            if(arr[j] % divisor == 0){
-                answer[index] = arr[j]; //예 -> 10은 인덱스가 3 ->
-                index++;
-            }
-        }
-         Arrays.sort(answer);
-       return answer;
+        Arrays.sort(answer);
+        return answer;
     }
 }
