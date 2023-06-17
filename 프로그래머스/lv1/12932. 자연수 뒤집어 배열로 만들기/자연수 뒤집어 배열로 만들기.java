@@ -2,13 +2,10 @@ import java.util.Arrays;
 class Solution {
     public static int[] solution(long n) {
         String s = Long.toString(n);
-        int length = s.length();
-        int[] answer = new int[length];
-        int i = 0;
-        while (n > 0) {
-            answer[i] = (int)(n % 10);
-            n = n/10;
-            i++;
+        int answer[] = new int[s.length()];
+        for (int i = s.length()-1 ; i >=0 ; i--) {
+            answer[s.length()-1-i] = s.charAt(i)-'0';
+            //0~9 -> 48 ~ 57 '2' = 50 - 48 = 2
         }
 
         return answer;
