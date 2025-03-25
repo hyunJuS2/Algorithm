@@ -13,11 +13,7 @@ class Solution {
         for(int num :nums){
             poket.add(num);
         }
-    
-        if(nums.length / 2 > poket.size() ) {
-            answer = poket.size();
-        }
-        else answer = nums.length / 2;
-        return answer;
+        
+      return  Math.min(nums.length/2 , poket.size());
     }
 }
