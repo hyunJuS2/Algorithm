@@ -1,39 +1,42 @@
+/* 
+계산 식 -> 99 = progress[i] + speeds[i] * day
+-> day = (99 - progress[i]) / speeds[i] + 1
+
+풀이 방법 1.
+1. queue를 확용하여 day 값을 progress의 순서대로 다 넣는다.
+2. 맨 앞 값을 뺀다(poll()) -> 이때 다음 값을 보고 뺀 값보다 작으면 같이 뺀다 sum + 1
+그 다음 list에 값에 넣는다.(배열은 안됨. 크기 지정 불가능)
+3. answer배열에 list값을 너는다.
+*/
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-
-        ArrayList<Integer> list = new ArrayList<>();
-        Queue<Integer> q = new LinkedList<>();
-
-        for (int i = 0; i < progresses.length; i++) {
-            if ((100 - progresses[i]) % speeds[i] == 0) {
-                q.add((100 - progresses[i]) / speeds[i]);
-            } else {
-                q.add((100 - progresses[i]) / speeds[i] + 1);
-            }
-        }
-
-        int x = q.poll();
+        int[] answer = {};
+        int day = 0;
         int count = 1;
-        while (!q.isEmpty()) {
-            if (x >= q.peek()) {
+        
+        Queue <Integer> que = new LinkedList<>();
+        List <Integer> list = new ArrayList<>();
+        
+        for(int i = 0; i < progresses.length; i++){
+            day = (99 - progresses[i]) / speeds[i] + 1;
+            que.offer(day);
+        }
+        int first = que.poll();
+        while(!que.isEmpty()){
+            if(first >= que.peek()){
+                que.poll();
                 count++;
-                q.poll();
-            } else {
+            }
+            else { 
                 list.add(count);
                 count = 1;
-                x = q.poll();
+                first = que.poll();
             }
         }
         list.add(count);
-
-        int[] answer = new int[list.size()];
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = list.get(i);
-        }
-
-
-        return answer;
+        // List<Integer> → int[] 변환
+        return list.stream().mapToInt(i -> i).toArray();
     }
 }
