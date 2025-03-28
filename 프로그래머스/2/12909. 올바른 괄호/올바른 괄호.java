@@ -1,19 +1,30 @@
-import java.util.Stack;
+/* stack을 잘 안쓴다는 것을 알았으니, deque로 구현해보자!
+풀이 방법 1.
+1. deque에 괄호를 넣는데 
+- deque가 비었을 경우, 같을 경우 push
+2. 모양이 다르면 pop
+3. 남아 있은 deque의 길이가 0이 아니라면 false
+
+*/
+
+import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        // stack 선언
-        Stack<Character> stack = new Stack<>();
-        //String s의 길이 만큼 for문.
-        for(int i = 0; i<s.length(); i++) {
-            // 스택이 비어있지 않으면서, i번째 문자가 ')'면 담지 않고 바로 스택.pop
-            if(!stack.empty() && s.charAt(i) == ')') {
-                stack.pop();
+        boolean answer = true;
+        
+        Deque <Character> que = new ArrayDeque<>();
+        
+        for(char b : s.toCharArray()){
+            if(b == '('){
+                que.push(b);
+            } else {
+                if(que.isEmpty()) return false;
+                que.pop();
             }
-            // '('는 스택에 담기
-            else stack.push(s.charAt(i));
         }
-
-        return stack.empty();
+        
+        answer = que.isEmpty();
+        return answer;
     }
 }
