@@ -3,24 +3,35 @@ class Solution {
     public int solution(int[] priorities, int location) {
         int answer = 0;
         
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<int[]> queue = new LinkedList<>();
         
-        for(int p : priorities){
-            pq.add(p);
+        for(int i = 0; i < priorities.length; i++){
+            queue.add(new int[]{i,priorities[i]});
         }
         
-        while(!pq.isEmpty()){
-            for(int i = 0; i < priorities.length; i++){
-                if(priorities[i] == pq.peek()){
-                    pq.poll();
-                    answer++;
-                    
-                    if(i == location){
-                        return answer;
-                    }
-                }           
+        while(!queue.isEmpty()){
+            int[] current = queue.poll();
+            boolean hasHigherPriority = false;
+            
+            
+            for(int[]q : queue){
+                if(q[1] > current[1]){
+                    hasHigherPriority = true;
+                    break;
+                }
             }
+            
+            if(hasHigherPriority){
+                queue.add(current);
+            } else {
+                answer++;
+                if(current[0] == location){
+                    return answer;
+                }
+            }
+            
         }
+        
         
         return answer;
     }
